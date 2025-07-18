@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../Components/Header';
-import Banner from '../assets/banner.png';
+import Banner from '../assets/Banner.png';
 import { useAgendamento } from '../data/hooks/useAgendamento';
 import { Calendar, CalendarOff, Pencil, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
