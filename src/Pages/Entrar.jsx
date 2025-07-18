@@ -90,7 +90,7 @@ export default function Entrar() {
   return (
     <div className="relative h-screen w-screen flex items-center flex-col px-4 overflow-hidden">
       <img
-        src="../public/Banner.jpg"
+        src="/Banner.webp"
         alt="Fundo"
         className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
       />
