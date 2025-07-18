@@ -5,7 +5,7 @@ import CiberSecurity from '../assets/CiberSecurity.jpg';
 import devops from '../assets/DevOps.jpg';
 import english from '../assets/English.jpg';
 import Banner from '../assets/banner.jpg'
-import Banner2 from '../assets/Banner.png'
+import Banner2 from '../assets/Banner2.jpg'
 
 import Amanda from '../assets/Amanda.png';
 import Bruno from '../assets/Bruno-Hacker.png';

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../Components/Header';
-import Banner from '../assets/Banner2.jpg';
 import { Cover } from '../Components/ui/cover';
 
 export default function Home() {
@@ -35,7 +34,7 @@ export default function Home() {
             {/* Plano de fundo da página */}
             <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden">
                 <img
-                    src={Banner}
+                    src="/Banner2.jpg"
                     alt="Fundo"
                     className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
                 />

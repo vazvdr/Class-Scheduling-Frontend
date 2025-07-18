@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../Components/Header';
-import Banner from '../assets/Banner.png';
+import Banner from '../assets/Banner.jpg';
 import { useAgendamento } from '../data/hooks/useAgendamento';
 import { Calendar, CalendarOff, Pencil, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -136,7 +136,7 @@ export default function Agendamentos() {
           </div>
         </div>
 
-        <div className="w-[60%] sm:w-[50%] md:w-[70%] grid gap-4">
+        <div className="w-[70%] sm:w-[50%] md:w-[70%] grid gap-4">
           {dataSelecionada && agendamentosAgrupados[dataSelecionada]?.length > 0 ? (
             agendamentosAgrupados[dataSelecionada].map((a) => (
               <div

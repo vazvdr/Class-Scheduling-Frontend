@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { imagens } from '../utils/imagens'
+import Banner from '../assets/banner.jpg'
 import Logo from "../assets/logo.png";
 
 import { useUsuario } from "../data/hooks/useUsuario.jsx";
@@ -91,7 +91,7 @@ export default function Entrar() {
   return (
     <div className="relative h-screen w-screen flex items-center flex-col px-4 overflow-hidden">
       <img
-        style={{ backgroundImage: `url(${imagens.Banner})` }}
+        src="../public/Banner.jpg"
         alt="Fundo"
         className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
       />

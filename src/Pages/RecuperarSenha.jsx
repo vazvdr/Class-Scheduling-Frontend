@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
-import { imagens } from '../utils/imagens'
 import Logo from "../assets/logo.png";
 
 import { Input } from "../Components/ui/input";
@@ -45,7 +44,7 @@ export default function RecuperarSenha() {
   return (
     <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
       <img
-        style={{ backgroundImage: `url(${imagens.Banner})` }}
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
         alt="Fundo"
         className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
       />

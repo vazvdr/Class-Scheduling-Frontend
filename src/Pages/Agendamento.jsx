@@ -207,7 +207,7 @@ export default function Agendamento() {
             {etapa === 1 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Assuntos Disponíveis</h2>
-                <div className="w-[70%] sm:w-[80%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-41 xl:gap-x-18 gap-y-3">
+                <div className="w-[98%] sm:w-[80%] md:w-[66%] lg:w-[70%] grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-3 place-items-center">
                   {assuntos.map((assunto) => {
                     const imagem = imagens[assunto.nome];
 
@@ -223,13 +223,16 @@ export default function Agendamento() {
                             horario: "",
                           })
                         }
-                        className={`w-40 cursor-pointer border-2 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition ${selecionado.assunto?.nome === assunto.nome ? "border-blue-600" : "border-gray-200"}`}
+                        className={`w-full max-w-[10rem] cursor-pointer border-2 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition ${selecionado.assunto?.nome === assunto.nome
+                            ? "border-blue-600"
+                            : "border-gray-200"
+                          }`}
                       >
                         {imagem ? (
                           <img src={imagem} alt={assunto.nome} className="w-full h-28 object-cover" />
                         ) : (
-                          <div className="w-full h-28 bg-gray-300 flex items-center justify-center">
-                            <p className="text-xs text-center text-gray-500">Imagem não encontrada</p>
+                          <div className="w-full h-28 bg-black flex items-center justify-center">
+                            <p className="text-xs text-center text-white">Imagem não encontrada</p>
                           </div>
                         )}
                         <div className="p-2 text-center text-white bg-blue-600">
@@ -256,7 +259,7 @@ export default function Agendamento() {
             {etapa === 2 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Professores Disponíveis</h2>
-                <div className="w-[70%] sm:w-[80%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-10 xl:gap-x-16 gap-y-3">
+                <div className="w-[98%] sm:w-[70%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-10 xl:gap-x-16 gap-y-3">
                   {professores.map((prof) => {
                     const imagem = imagens[prof.nome];
 

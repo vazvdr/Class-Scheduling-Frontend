@@ -5,7 +5,6 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Alert, AlertDescription, AlertTitle } from "../Components/ui/alert";
 import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
-import { imagens } from '../utils/imagens'
 import Logo from "../assets/logo.png";
 import { redefinirSenha } from "../data/services/usuarioService";
 
@@ -68,7 +67,7 @@ export default function RedefinirSenha() {
   return (
     <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
       <img 
-      style={{ backgroundImage: `url(${imagens.Banner})` }}
+      style={{ backgroundImage: "url('/Banner.jpg')" }}
        alt="Fundo" 
        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]" />
       <div className="mt-12 z-10">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { imagens } from '../utils/imagens';
+import Banner from '../assets/Banner.jpg'
 import Header from "../Components/Header";
 import { useUsuario } from "../data/hooks/useUsuario";
 import {
@@ -99,7 +99,7 @@ export default function EditarUsuario() {
     <>
       <div
         className="relative w-screen h-screen bg-cover bg-center"
-        style={{ backgroundImage: `url(${imagens.Banner})` }}
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
       >
         <Header className="z-10" />
 
