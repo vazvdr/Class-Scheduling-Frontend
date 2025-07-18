@@ -34,7 +34,7 @@ export default function Home() {
             {/* Plano de fundo da página */}
             <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden">
                 <img
-                    src="/banner2.webp?v=1"
+                    src="/Banner2.webp?v=1"
                     alt="Fundo"
                     className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
                 />
