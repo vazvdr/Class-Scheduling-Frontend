@@ -33,14 +33,10 @@ export default function Home() {
 
             {/* Plano de fundo da página */}
             <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden">
-                <picture>
-                    <source srcSet="/Banner2.webp?v=1" type="image/webp" />
-                    <img
-                        src="/Banner2.jpg?v=1" // Fallback para browsers sem suporte a webp
-                        alt="Fundo"
-                        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-                    />
-                </picture>
+                style={{
+                    backgroundImage: "url('/Banner2.webp?v=1')",
+                    backgroundAttachment: 'fixed',
+                }}
 
                 <div className="flex flex-col items-center text-center px-4 mt-[0%] w-[90%] md:w-2xl gap-y-0.5">
                     {/* Título com gradiente no fundo e texto */}
