@@ -169,7 +169,7 @@ export default function Agendamento() {
 
       <div
         className="relative w-full h-[150px] bg-cover bg-center flex flex-col items-center justify-center text-center"
-        style={{ backgroundImage: `url(${imagens.Banner})` }}
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
       >
         {/* Overlay com blur */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-md z-0 rounded-md" />
