@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../Components/Header';
-import Banner from '../assets/Banner.png';
+import Banner from '../assets/Banner2.jpg';
 import { Cover } from '../Components/ui/cover';
 
 export default function Home() {
