@@ -32,12 +32,15 @@ export default function Home() {
             <Header />
 
             {/* Plano de fundo da página */}
-            <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden">
+            <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden"
                 style={{
                     backgroundImage: "url('/Banner2.webp?v=1')",
                     backgroundAttachment: 'fixed',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
                 }}
-
+            >
                 <div className="flex flex-col items-center text-center px-4 mt-[0%] w-[90%] md:w-2xl gap-y-0.5">
                     {/* Título com gradiente no fundo e texto */}
                     <div className="text-4xl font-bold leading-tight px-4 py-1 rounded-md bg-gradient-to-r from-gray-800/90 to-black/80">
