@@ -161,7 +161,7 @@ export default function EditarAgendamento() {
 
       <div
         className="relative w-full h-[150px] bg-cover bg-center flex flex-col items-center justify-center text-center"
-        style={{ backgroundImage: `url(${imagens.Banner})` }}
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/60 backdrop-blur-md z-0 rounded-md" />
         <div className="z-10">

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Banner from '../assets/banner.jpg'
 import Logo from "../assets/logo.png";
 
 import { useUsuario } from "../data/hooks/useUsuario.jsx";

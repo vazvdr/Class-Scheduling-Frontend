@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Banner from '../assets/Banner.jpg'
 import Header from "../Components/Header";
 import { useUsuario } from "../data/hooks/useUsuario";
 import {
