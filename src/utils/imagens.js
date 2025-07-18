@@ -4,7 +4,7 @@ import fullstack from '../assets/Fullstack.jpg';
 import CiberSecurity from '../assets/CiberSecurity.jpg';
 import devops from '../assets/DevOps.jpg';
 import english from '../assets/English.jpg';
-import Banner from '../assets/Banner.jpg'
+import Banner from '../assets/banner.jpg'
 import Banner2 from '../assets/Banner.png'
 
 import Amanda from '../assets/Amanda.png';
