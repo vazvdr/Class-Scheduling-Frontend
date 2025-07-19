@@ -32,15 +32,15 @@ export default function Agendamentos() {
 
   const gerarProximosDiasUteis = () => {
     const diasUteis = [];
-    let dataAtual = new Date();
+    const dataAtual = new Date();
+  
+    dataAtual.setHours(0, 0, 0, 0);
   
     while (diasUteis.length < 7) {
       const diaSemana = dataAtual.getDay();
       if (diaSemana !== 0 && diaSemana !== 6) {
         const dataFormatada = dataAtual.toISOString().slice(0, 10);
-        if (!diasUteis.includes(dataFormatada)) {
-          diasUteis.push(dataFormatada);
-        }
+        diasUteis.push(dataFormatada);
       }
       dataAtual.setDate(dataAtual.getDate() + 1);
     }

@@ -29,7 +29,7 @@ export default function Home() {
     };
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden md:home-header-wrapper">
+        <div className="relative w-screen h-screen overflow-hidden home-header-wrapper">
             {/* CanvasLines em telas pequenas */}
             <div className="block md:hidden">
                 <CanvasLines />
