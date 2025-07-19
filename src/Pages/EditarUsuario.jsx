@@ -101,26 +101,20 @@ export default function EditarUsuario() {
 
   return (
     <>
-
       <div className="relative w-screen min-h-screen overflow-hidden home-header-wrapper">
-        {/* CanvasLines como background em telas menores */}
         <div className="block md:hidden fixed inset-0 z-[-1]">
           <CanvasLines />
         </div>
 
-        {/* Banner.jpg como background em telas md+ */}
         <div
           className="hidden md:block fixed inset-0 bg-cover bg-center z-[-1]"
           style={{ backgroundImage: "url('/Banner.jpg')" }}
         />
 
-        {/* Header no topo */}
         <Header />
 
-        {/* Conteúdo sobre o fundo */}
         <div className="relative z-20 px-4 pt-18 pb-10 flex flex-col items-center gap-10">
 
-          {/* Título e subtítulo */}
           <div className="text-center">
             <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-300">
               Editar Perfil
@@ -130,22 +124,19 @@ export default function EditarUsuario() {
             </p>
           </div>
 
-          {/* Botão de deletar no canto superior direito */}
           <div className="absolute top-18 right-4 z-30">
+          </div>
+
+          <div className="border border-white shadow-lg rounded-xl p-8 w-full max-w-md bg-zinc-900/95 text-white relative">
             <button
               onClick={handleDeletar}
-              className="border border-white bg-red-600 text-white px-3 py-2 rounded-md shadow 
-        hover:bg-red-700 transition cursor-pointer"
+              className="absolute top-0 right-0 border border-white bg-red-600 text-white px-1.5 py-1.5 rounded-md shadow 
+    hover:bg-red-700 transition cursor-pointer"
             >
               Deletar Conta
             </button>
-          </div>
-
-          {/* Formulário */}
-          <div className="border border-white shadow-lg rounded-xl p-8 w-full max-w-md bg-zinc-900/95 text-white">
             <Form {...form}>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-                {/* Campo Nome */}
                 <FormField
                   control={control}
                   name="nome"
@@ -164,7 +155,6 @@ export default function EditarUsuario() {
                   )}
                 />
 
-                {/* Campo Email */}
                 <FormField
                   control={control}
                   name="email"
@@ -189,7 +179,6 @@ export default function EditarUsuario() {
                   )}
                 />
 
-                {/* Campo Telefone */}
                 <FormField
                   control={control}
                   name="telefone"
@@ -208,7 +197,6 @@ export default function EditarUsuario() {
                   )}
                 />
 
-                {/* Campo Senha */}
                 <FormField
                   control={control}
                   name="senha"
@@ -228,7 +216,6 @@ export default function EditarUsuario() {
                   )}
                 />
 
-                {/* Botão de atualização */}
                 <button
                   type="submit"
                   disabled={loadingAtualizar}

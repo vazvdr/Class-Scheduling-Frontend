@@ -30,12 +30,9 @@ export default function Home() {
 
     return (
         <div className="relative w-screen h-screen overflow-hidden home-header-wrapper">
-            {/* CanvasLines em telas pequenas */}
             <div className="block md:hidden">
                 <CanvasLines />
             </div>
-
-            {/* Banner em telas md+ */}
             <div
                 className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
                 style={{ backgroundImage: "url('/Banner2.jpg')" }}
@@ -43,7 +40,6 @@ export default function Home() {
 
             <Header />
 
-            {/* Conteúdo */}
             <div className="relative h-screen w-screen flex items-center justify-center overflow-hidden">
                 <div className="flex flex-col items-center text-center px-4 w-[90%] md:w-2xl gap-y-0.5">
                     <div className="text-4xl font-bold leading-tight px-4 py-1 rounded-md bg-gradient-to-r from-gray-800/90 to-black/80">

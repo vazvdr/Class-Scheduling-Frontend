@@ -45,7 +45,7 @@ export default function Entrar() {
       if (isLogin) {
         setLoginLoading(true);
         await login({ email: data.email, senha: data.senha });
-
+  
         setTimeout(() => {
           setAlerta((prev) => ({ ...prev, visivel: false }));
           navigate("/");
@@ -65,7 +65,7 @@ export default function Entrar() {
             setTimeout(() => {
               setAlerta((prev) => ({ ...prev, visivel: false }));
             }, 3000);
-          }
+          },
         });
       }
     } catch (error) {
@@ -74,19 +74,21 @@ export default function Entrar() {
         error.response?.data?.error ||
         error.message ||
         "Erro desconhecido.";
-
+  
       setAlerta({
         visivel: true,
         tipo: "destructive",
         titulo: "Erro ao autenticar",
         descricao: mensagemErro,
       });
-
+  
+      setLoginLoading(false); // ← ⚠️ Correção essencial aqui
+  
       setTimeout(() => {
         setAlerta((prev) => ({ ...prev, visivel: false }));
       }, 3000);
     }
-  };
+  };  
 
   const irParaRecuperarSenha = () => {
     navigate('/recuperar-senha');
