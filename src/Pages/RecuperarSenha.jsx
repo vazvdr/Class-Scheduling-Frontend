@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
 import Logo from "../assets/logo.png";
+import CanvasLines from '../Components/CanvasLines';
 
 import { Input } from "../Components/ui/input";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "../Components/ui/form";
@@ -43,29 +44,36 @@ export default function RecuperarSenha() {
 
   return (
     <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
+
+      {/* CanvasLines para telas menores que md */}
+      <div className="block md:hidden fixed inset-0 z-[-1]">
+        <CanvasLines />
+      </div>
+
+      {/* Imagem para telas md ou maiores */}
       <img
+        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
         style={{ backgroundImage: "url('/Banner.jpg')" }}
-        alt="Fundo"
-        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
       />
 
       <button
         onClick={() => navigate("/entrar")}
         className="absolute top-2 left-2 z-20 flex items-center gap-1 
-        text-black bg-white/70 border border-black rounded-md px-3 py-1 
-        hover:bg-white hover:scale-105 transition cursor-pointer"
+    text-black bg-white/70 border border-black rounded-md px-3 py-1 
+    hover:bg-white hover:scale-105 transition cursor-pointer"
       >
         <ArrowLeft size={18} />
         <span className="text-sm font-medium">Voltar</span>
       </button>
 
+      {/* resto do seu código sem alteração */}
       <div className="mt-2 z-10">
         <img src={Logo} alt="Logo" className="h-40" />
       </div>
 
       <div className="border border-white shadow-lg rounded-xl p-4 w-[80%] max-w-md bg-zinc-900 
-        z-10 mt-4 max-h-[65vh] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 
-        scrollbar-track-transparent">
+    z-10 mt-4 max-h-[65vh] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 
+    scrollbar-track-transparent">
         <h2 className="text-2xl font-bold mb-4 text-center bg-gradient-to-r from-red-600 to-blue-500 text-transparent bg-clip-text">
           Recuperar Senha
         </h2>

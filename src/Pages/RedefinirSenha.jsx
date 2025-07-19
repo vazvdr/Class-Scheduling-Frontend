@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
 import Logo from "../assets/logo.png";
 import { redefinirSenha } from "../data/services/usuarioService";
+import CanvasLines from '../Components/CanvasLines'
 
 export default function RedefinirSenha() {
   const navigate = useNavigate();
@@ -42,16 +43,16 @@ export default function RedefinirSenha() {
         descricao: "As senhas não coincidem."
       });
       return;
-    }  
+    }
     setLoading(true);
     try {
-      await redefinirSenha({ token, novaSenha: data.novaSenha });  
+      await redefinirSenha({ token, novaSenha: data.novaSenha });
       setAlerta({
         visivel: true,
         tipo: "default",
         titulo: "Senha atualizada com sucesso ✅",
         descricao: "Agora você pode fazer login com sua nova senha."
-      });  
+      });
       setTimeout(() => navigate("/entrar"), 3000);
     } catch (error) {
       setAlerta({
@@ -62,14 +63,22 @@ export default function RedefinirSenha() {
       });
     }
     setLoading(false);
-  };  
+  };
 
   return (
     <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
-      <img 
-      style={{ backgroundImage: "url('/Banner.jpg')" }}
-       alt="Fundo" 
-       className="absolute top-0 left-0 w-full h-full object-cover z-[-1]" />
+
+      {/* CanvasLines para telas menores que md */}
+      <div className="block md:hidden fixed inset-0 z-[-1]">
+        <CanvasLines />
+      </div>
+
+      {/* Imagem de fundo para telas md+ */}
+      <img
+        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
+      />
+
       <div className="mt-12 z-10">
         <img src={Logo} alt="Logo" className="h-32" />
       </div>
@@ -77,15 +86,15 @@ export default function RedefinirSenha() {
       <button
         onClick={() => navigate("/entrar")}
         className="absolute top-2 left-2 z-20 flex items-center gap-1 
-        text-black bg-white/70 border border-black rounded-md px-3 py-1 
-        hover:bg-white hover:scale-105 transition cursor-pointer"
+    text-black bg-white/70 border border-black rounded-md px-3 py-1 
+    hover:bg-white hover:scale-105 transition cursor-pointer"
       >
         <ArrowLeft size={18} />
         <span className="text-sm font-medium">Voltar</span>
       </button>
 
       <div className="border border-white shadow-lg rounded-xl p-4 w-[90%] max-w-md bg-zinc-900 
-        z-10 mt-4 max-h-[65vh] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+    z-10 mt-4 max-h-[65vh] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
         <h2 className="text-2xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-blue-500">
           Redefinir Senha
         </h2>
@@ -137,11 +146,10 @@ export default function RedefinirSenha() {
             <button
               type="submit"
               disabled={loading || !token}
-              className={`w-full font-semibold py-2 rounded transition border border-white cursor-pointer ${
-                loading || !token
+              className={`w-full font-semibold py-2 rounded transition border border-white cursor-pointer ${loading || !token
                   ? "bg-gray-400 text-white cursor-not-allowed"
                   : "bg-transparent text-white hover:bg-white hover:text-black"
-              }`}
+                }`}
             >
               {loading ? "Redefinindo..." : "Redefinir Senha"}
             </button>

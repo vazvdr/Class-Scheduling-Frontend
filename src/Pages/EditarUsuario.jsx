@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
+import CanvasLines from '../Components/CanvasLines'
 import { useUsuario } from "../data/hooks/useUsuario";
 import {
   Form,
@@ -27,6 +28,7 @@ import { Alert, AlertDescription, AlertTitle } from "../Components/ui/alert";
 export default function EditarUsuario() {
   const navigate = useNavigate();
   const { editar, deletar } = useUsuario();
+  const [loadingAtualizar, setLoadingAtualizar] = useState(false);
 
   const [alerta, setAlerta] = useState({
     visivel: false,
@@ -60,6 +62,8 @@ export default function EditarUsuario() {
   }, [navigate, setValue]);
 
   const onSubmit = async (data) => {
+    setLoadingAtualizar(true);
+
     await editar({
       ...data,
       onSuccess: () => {
@@ -68,6 +72,7 @@ export default function EditarUsuario() {
           titulo: "Seus dados foram atualizados com sucesso! ✅",
           descricao: "Você será redirecionado para a página inicial!",
         });
+        setLoadingAtualizar(false);
         setTimeout(() => {
           setAlerta({ visivel: false, titulo: "", descricao: "" });
           navigate("/");
@@ -96,45 +101,57 @@ export default function EditarUsuario() {
 
   return (
     <>
-      <div
-        className="relative w-screen h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/Banner.jpg')" }}
-      >
-        <Header className="z-10" />
 
-        {/* Título centralizado entre logo e dropdown */}
+      <div className="relative w-screen min-h-screen overflow-hidden home-header-wrapper">
+        {/* CanvasLines como background em telas menores */}
+        <div className="block md:hidden fixed inset-0 z-[-1]">
+          <CanvasLines />
+        </div>
+
+        {/* Banner.jpg como background em telas md+ */}
         <div
-          className="absolute top-0 left-[25%] right-[25%] flex flex-col items-center mt-4 z-50 text-white text-center"
-        >
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-600 bg-clip-text text-transparent">
-            Editar Perfil
-          </h1>
-          <p className="text-sm text-gray-200">Atualize seus dados</p>
-        </div>
-        <div className="absolute top-18 right-2 z-20">
-          <button
-            onClick={handleDeletar}
-            className="border border-white bg-red-600 text-white px-2 py-2 rounded-md shadow hover:bg-red-700 cursor-pointer"
-          >
-            Deletar Conta
-          </button>
-        </div>
+          className="hidden md:block fixed inset-0 bg-cover bg-center z-[-1]"
+          style={{ backgroundImage: "url('/Banner.jpg')" }}
+        />
 
-        <div className="flex items-center justify-center h-full w-full">
-          <div className="border border-white shadow-lg rounded-xl p-8 
-          w-[70%] mt-[15%] md:w-[50%] md:mt-[1%] lg:w-[38%] bg-zinc-900/95 text-white z-10">
+        {/* Header no topo */}
+        <Header />
 
+        {/* Conteúdo sobre o fundo */}
+        <div className="relative z-20 px-4 pt-18 pb-10 flex flex-col items-center gap-10">
+
+          {/* Título e subtítulo */}
+          <div className="text-center">
+            <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-300">
+              Editar Perfil
+            </h1>
+            <p className="text-gray-300 mt-1 text-sm sm:text-base">
+              Atualize seus dados
+            </p>
+          </div>
+
+          {/* Botão de deletar no canto superior direito */}
+          <div className="absolute top-18 right-4 z-30">
+            <button
+              onClick={handleDeletar}
+              className="border border-white bg-red-600 text-white px-3 py-2 rounded-md shadow 
+        hover:bg-red-700 transition cursor-pointer"
+            >
+              Deletar Conta
+            </button>
+          </div>
+
+          {/* Formulário */}
+          <div className="border border-white shadow-lg rounded-xl p-8 w-full max-w-md bg-zinc-900/95 text-white">
             <Form {...form}>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+                {/* Campo Nome */}
                 <FormField
                   control={control}
                   name="nome"
                   rules={{
                     required: "O nome é obrigatório",
-                    minLength: {
-                      value: 3,
-                      message: "O nome deve ter pelo menos 3 letras"
-                    }
+                    minLength: { value: 3, message: "O nome deve ter pelo menos 3 letras" },
                   }}
                   render={({ field }) => (
                     <FormItem>
@@ -147,6 +164,7 @@ export default function EditarUsuario() {
                   )}
                 />
 
+                {/* Campo Email */}
                 <FormField
                   control={control}
                   name="email"
@@ -158,7 +176,7 @@ export default function EditarUsuario() {
                       if (!formatoValido) return "Digite um email válido";
                       if (!dominioValido) return "Aceitamos apenas gmail, hotmail, outlook ou yahoo";
                       return true;
-                    }
+                    },
                   }}
                   render={({ field }) => (
                     <FormItem>
@@ -170,15 +188,14 @@ export default function EditarUsuario() {
                     </FormItem>
                   )}
                 />
+
+                {/* Campo Telefone */}
                 <FormField
                   control={control}
                   name="telefone"
                   rules={{
                     required: "O telefone é obrigatório",
-                    pattern: {
-                      value: /^\d{11}$/,
-                      message: "O telefone deve conter exatamente 11 números"
-                    }
+                    pattern: { value: /^\d{11}$/, message: "O telefone deve conter exatamente 11 números" },
                   }}
                   render={({ field }) => (
                     <FormItem>
@@ -190,13 +207,15 @@ export default function EditarUsuario() {
                     </FormItem>
                   )}
                 />
+
+                {/* Campo Senha */}
                 <FormField
                   control={control}
                   name="senha"
                   rules={{
                     required: "A senha é obrigatória",
                     validate: (value) =>
-                      (value.match(/\d/g) || []).length >= 3 || "A senha deve conter pelo menos 3 números"
+                      (value.match(/\d/g) || []).length >= 3 || "A senha deve conter pelo menos 3 números",
                   }}
                   render={({ field }) => (
                     <FormItem>
@@ -208,18 +227,27 @@ export default function EditarUsuario() {
                     </FormItem>
                   )}
                 />
+
+                {/* Botão de atualização */}
                 <button
                   type="submit"
-                  className="w-full bg-transparent border border-white text-white font-semibold 
-        py-2 rounded-md hover:bg-white hover:text-black transition cursor-pointer"
+                  disabled={loadingAtualizar}
+                  className={`w-full flex items-center justify-center gap-2 bg-transparent 
+                  border border-white text-white font-semibold py-2 rounded-md hover:bg-white 
+                  hover:text-black transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed`}
                 >
+                  {loadingAtualizar && (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  )}
                   Atualizar
                 </button>
+
               </form>
             </Form>
           </div>
         </div>
       </div>
+
 
       {alerta.visivel && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">

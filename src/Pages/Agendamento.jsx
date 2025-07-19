@@ -14,10 +14,14 @@ import { useNavigate } from 'react-router-dom';
 export default function Agendamento() {
   const navigate = useNavigate();
   const [assuntos, setAssuntos] = useState([]);
+  const [loadingAssuntos, setLoadingAssuntos] = useState(false);
   const [professores, setProfessores] = useState([]);
+  const [loadingProfessores, setLoadingProfessores] = useState(false);
   const [horarios, setHorarios] = useState({});
+  const [loadingHorarios, setLoadingHorarios] = useState(false);
   const [datas, setDatas] = useState([]);
   const [etapa, setEtapa] = useState(1);
+  const [loadingAgendamento, setLoadingAgendamento] = useState(false);
   const [selecionado, setSelecionado] = useState({
     assunto: null,
     duracao: null,
@@ -59,8 +63,10 @@ export default function Agendamento() {
   // 🔁 Buscar assuntos ao carregar o componente
   useEffect(() => {
     const carregarAssuntos = async () => {
+      setLoadingAssuntos(true);
       const dados = await buscarAssuntos();
       setAssuntos(dados);
+      setLoadingAssuntos(false);
     };
     carregarAssuntos();
   }, []);
@@ -69,8 +75,10 @@ export default function Agendamento() {
   useEffect(() => {
     const carregarProfessores = async () => {
       if (selecionado.assunto?.nome) {
+        setLoadingProfessores(true);
         const professoresEncontrados = await buscarProfessoresPorAssunto(selecionado.assunto.nome);
         setProfessores(professoresEncontrados);
+        setLoadingProfessores(false);
       }
     };
     carregarProfessores();
@@ -80,13 +88,20 @@ export default function Agendamento() {
   useEffect(() => {
     const carregarDisponibilidade = async () => {
       if (etapa === 3 && selecionado.assunto?.id && selecionado.professor?.id) {
+        setLoadingHorarios(true);
         try {
-          const resposta = await buscarDisponibilidade(selecionado.assunto.id, selecionado.professor.id, token);
+          const resposta = await buscarDisponibilidade(
+            selecionado.assunto.id,
+            selecionado.professor.id,
+            token
+          );
           const datasDisponiveis = Object.keys(resposta).sort();
           setHorarios(resposta);
           setDatas(datasDisponiveis);
         } catch (erro) {
           console.error("Erro ao buscar horários:", erro);
+        } finally {
+          setLoadingHorarios(false);
         }
       }
     };
@@ -94,40 +109,42 @@ export default function Agendamento() {
   }, [etapa, selecionado]);
 
   const handleAgendar = async () => {
+    setLoadingAgendamento(true);
+  
     const payload = {
       assuntoId: selecionado.assunto?.id,
       professorId: selecionado.professor?.id,
       data: selecionado.data,
       horario: selecionado.horario,
     };
-
+  
     try {
       await criarAgendamento(payload, token);
-
       setAlerta({
         tipo: "success",
         titulo: "Agendamento realizado com sucesso ✅",
         descricao: "Verifique a confirmação no seu email cadastrado.",
         visivel: true,
       });
-
+  
       setTimeout(() => {
+        setAlerta(prev => ({ ...prev, visivel: false }));
         navigate('/');
       }, 4000);
+  
     } catch (error) {
-      const mensagemErro =
-        error.response?.data?.message ||
+      const mensagemErro = error.response?.data?.message ||
         error.response?.data?.error ||
         error.response?.data ||
         "Erro desconhecido";
-
+  
       let alertaErro = {
         tipo: "destructive",
         titulo: "Erro ao agendar",
         descricao: mensagemErro,
         visivel: true,
       };
-
+  
       if (mensagemErro.includes("conflito com este horário")) {
         alertaErro = {
           tipo: "destructive",
@@ -135,23 +152,18 @@ export default function Agendamento() {
           descricao: mensagemErro,
           visivel: true,
         };
-      } else if (mensagemErro.includes("Assunto não encontrado")) {
-        alertaErro = {
-          tipo: "destructive",
-          titulo: "Erro no assunto",
-          descricao: mensagemErro,
-          visivel: true,
-        };
       }
-
+  
       setAlerta(alertaErro);
-
-      // 🔁 Oculta o alerta após 3 segundos
+  
       setTimeout(() => {
         setAlerta(prev => ({ ...prev, visivel: false }));
-      }, 3000);
+      }, 4000);
+  
+    } finally {
+      setLoadingAgendamento(false);
     }
-  };
+  };  
 
   return (
     <>
@@ -207,6 +219,7 @@ export default function Agendamento() {
             {etapa === 1 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Assuntos Disponíveis</h2>
+                {loadingAssuntos && <p className="text-white mb-4">Carregando...</p>}
                 <div className="w-[98%] sm:w-[80%] md:w-[66%] lg:w-[70%] grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-3 place-items-center">
                   {assuntos.map((assunto) => {
                     const imagem = imagens[assunto.nome];
@@ -224,8 +237,8 @@ export default function Agendamento() {
                           })
                         }
                         className={`w-full max-w-[10rem] cursor-pointer border-2 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition ${selecionado.assunto?.nome === assunto.nome
-                            ? "border-blue-600"
-                            : "border-gray-200"
+                          ? "border-blue-600"
+                          : "border-gray-200"
                           }`}
                       >
                         {imagem ? (
@@ -259,6 +272,7 @@ export default function Agendamento() {
             {etapa === 2 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Professores Disponíveis</h2>
+                {loadingProfessores && <p className="text-white mb-4">Carregando...</p>}
                 <div className="w-[98%] sm:w-[70%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-10 xl:gap-x-16 gap-y-3">
                   {professores.map((prof) => {
                     const imagem = imagens[prof.nome];
@@ -306,6 +320,9 @@ export default function Agendamento() {
                 {/* Datas disponíveis */}
                 <div>
                   <h2 className="text-2xl font-bold text-white mb-4">DATAS DISPONÍVEIS</h2>
+                  {loadingHorarios && !selecionado.data && (
+                    <p className="text-white mb-4">Carregando...</p>
+                  )}
                   <div className="flex flex-wrap gap-x-0">
                     {Object.keys(horarios).map((data) => {
                       const diaSemana = new Date(data + "T00:00:00").toLocaleDateString("pt-BR", {
@@ -337,7 +354,7 @@ export default function Agendamento() {
 
                 {/* Horários disponíveis */}
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-2">HORÁRIOS DISPONÍVEIS</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">Horários Disponíveis</h2>
                   <div className="flex flex-col gap-4">
                     {["manha", "tarde", "noite"].map((periodo) => {
                       const horariosPeriodo = horarios?.[selecionado.data]?.[periodo] || [];
@@ -459,11 +476,15 @@ export default function Agendamento() {
               <div className="mt-6">
                 <button
                   onClick={handleAgendar}
-                  disabled={etapa !== 3 || !selecionado.horario}
+                  disabled={etapa !== 3 || !selecionado.horario || loadingAgendamento}
                   className="w-full bg-blue-700 border border-white text-white px-4 py-2 
-                  rounded disabled:opacity-50 cursor-pointer hover:scale-105 transition-all"
+  rounded disabled:opacity-50 cursor-pointer hover:scale-105 transition-all flex items-center justify-center gap-2"
                 >
-                  Finalizar Agendamento
+                  {loadingAgendamento ? (
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    "Finalizar Agendamento"
+                  )}
                 </button>
               </div>
             </div>

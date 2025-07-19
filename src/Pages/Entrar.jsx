@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Logo from "../assets/logo.png";
+import CanvasLines from '../Components/CanvasLines'
 
 import { useUsuario } from "../data/hooks/useUsuario.jsx";
 import {
@@ -21,6 +22,7 @@ export default function Entrar() {
   const navigate = useNavigate();
   const { login, cadastrar, loading } = useUsuario();
   const [isLogin, setIsLogin] = useState(true);
+  const [loginLoading, setLoginLoading] = useState(false);
   const form = useForm({
     defaultValues: {
       nome: "",
@@ -41,10 +43,13 @@ export default function Entrar() {
   const onSubmit = async (data) => {
     try {
       if (isLogin) {
+        setLoginLoading(true);
         await login({ email: data.email, senha: data.senha });
+
         setTimeout(() => {
           setAlerta((prev) => ({ ...prev, visivel: false }));
           navigate("/");
+          setLoginLoading(false);
         }, 2000);
       } else {
         await cadastrar({
@@ -89,10 +94,16 @@ export default function Entrar() {
 
   return (
     <div className="relative h-screen w-screen flex items-center flex-col px-4 overflow-hidden">
-      <img
-        src="/banner.webp"
-        alt="Fundo"
-        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+
+      {/* Fundo animado só em telas < md */}
+      <div className="block md:hidden">
+        <CanvasLines />
+      </div>
+
+      {/* Imagem de fundo só em telas md ou maiores */}
+      <div
+        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
+        style={{ backgroundImage: "url('/Banner.jpg')" }}
       />
 
       <button
@@ -105,7 +116,7 @@ export default function Entrar() {
         <span className="text-sm font-medium">Voltar</span>
       </button>
 
-      <div className="flex items-center justify-start p-0 h-20 z-10">
+      <div className="flex items-center justify-start p-0 h-30 z-10">
         <Link to="/">
           <img src={Logo} alt="Logo" className="h-36" />
         </Link>
@@ -229,20 +240,26 @@ export default function Entrar() {
               <div
                 className="text-right text-sm text-white hover:underline cursor-pointer"
                 onClick={irParaRecuperarSenha}
-                >
+              >
                 Esqueceu sua senha?
               </div>
             )}
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loginLoading || loading}
               className={`w-full font-semibold py-2 rounded transition cursor-pointer border border-white ${loading
                 ? "bg-gray-400 text-white"
                 : "bg-transparent text-white hover:bg-white hover:text-black"
                 }`}
             >
-              {loading ? "Carregando..." : isLogin ? "Entrar" : "Cadastrar"}
+              {isLogin
+                ? loginLoading
+                  ? "Entrando..."
+                  : "Entrar"
+                : loading
+                  ? "Cadastrando..."
+                  : "Cadastrar"}
             </button>
           </form>
         </Form>

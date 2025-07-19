@@ -18,11 +18,14 @@ export default function EditarAgendamento() {
   
   const { id } = useParams();
   const [assuntos, setAssuntos] = useState([]);
+  const [loadingAssuntos, setLoadingAssuntos] = useState(false);
   const [professores, setProfessores] = useState([]);
+  const [loadingProfessores, setLoadingProfessores] = useState(false);
   const [horarios, setHorarios] = useState({});
+  const [loadingHorarios, setLoadingHorarios] = useState(false);
   const [datas, setDatas] = useState([]);
   const [etapa, setEtapa] = useState(1);
-
+  const [loadingAgendamento, setLoadingAgendamento] = useState(false);
   const [selecionado, setSelecionado] = useState({
     assunto: null,
     duracao: null,
@@ -63,8 +66,10 @@ export default function EditarAgendamento() {
 
   useEffect(() => {
     const carregarAssuntos = async () => {
+      setLoadingAssuntos(true);
       const dados = await buscarAssuntos();
       setAssuntos(dados);
+      setLoadingAssuntos(false);
     };
     carregarAssuntos();
   }, []);
@@ -72,8 +77,10 @@ export default function EditarAgendamento() {
   useEffect(() => {
     const carregarProfessores = async () => {
       if (selecionado.assunto?.nome) {
+        setLoadingProfessores(true);
         const professoresEncontrados = await buscarProfessoresPorAssunto(selecionado.assunto.nome);
         setProfessores(professoresEncontrados);
+        setLoadingProfessores(false);
       }
     };
     carregarProfessores();
@@ -82,6 +89,7 @@ export default function EditarAgendamento() {
   useEffect(() => {
     const carregarDisponibilidadeParaEdicao = async () => {
       if (etapa === 3 && selecionado.assunto?.id && selecionado.professor?.id) {
+        setLoadingHorarios(true);
         try {
           const resposta = await buscarDisponibilidadeParaEdicao(
             selecionado.assunto.id, 
@@ -93,6 +101,8 @@ export default function EditarAgendamento() {
           setDatas(datasDisponiveis);
         } catch (erro) {
           console.error("Erro ao buscar horários:", erro);
+        } finally {
+          setLoadingHorarios(false);
         }
       }
     };
@@ -100,15 +110,20 @@ export default function EditarAgendamento() {
   }, [etapa, selecionado]);
 
   const handleAtualizar = async () => {
+    setLoadingAgendamento(true);
+  
     const payload = {
       assuntoId: selecionado.assunto?.id,
       professorId: selecionado.professor?.id,
       data: selecionado.data,
       horario: selecionado.horario,
     };
+  
     const token = localStorage.getItem("token")?.trim();
-    try {  
+  
+    try {
       await editarAgendamentoDoUsuario(id, payload, token);
+  
       setAlerta({
         tipo: "success",
         titulo: "✅ Agendamento atualizado com sucesso!",
@@ -117,8 +132,10 @@ export default function EditarAgendamento() {
       });
   
       setTimeout(() => {
+        setAlerta(prev => ({ ...prev, visivel: false }));
         navigate('/');
-      }, 2500);
+      }, 4000);
+  
     } catch (error) {
       console.error("🛑 Erro ao atualizar:", error);
   
@@ -142,8 +159,15 @@ export default function EditarAgendamento() {
           visivel: true
         });
       }
+  
+      setTimeout(() => {
+        setAlerta(prev => ({ ...prev, visivel: false }));
+      }, 4000);
+  
+    } finally {
+      setLoadingAgendamento(false);
     }
-  };
+  };  
 
   return (
     <>
@@ -195,7 +219,8 @@ export default function EditarAgendamento() {
             {etapa === 1 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Assuntos Disponíveis</h2>
-                <div className="w-[70%] sm:w-[80%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-41 xl:gap-x-18 gap-y-3">
+                {loadingAssuntos && <p className="text-white mb-4">Carregando...</p>}
+                <div className="w-[98%] sm:w-[80%] md:w-[66%] lg:w-[70%] grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-3 place-items-center">
                   {assuntos.map((assunto) => {
                     const imagem = imagens[assunto.nome];
 
@@ -211,13 +236,16 @@ export default function EditarAgendamento() {
                             horario: "",
                           })
                         }
-                        className={`w-40 cursor-pointer border-2 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition ${selecionado.assunto?.nome === assunto.nome ? "border-blue-600" : "border-gray-200"}`}
+                        className={`w-full max-w-[10rem] cursor-pointer border-2 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition ${selecionado.assunto?.nome === assunto.nome
+                            ? "border-blue-600"
+                            : "border-gray-200"
+                          }`}
                       >
                         {imagem ? (
                           <img src={imagem} alt={assunto.nome} className="w-full h-28 object-cover" />
                         ) : (
-                          <div className="w-full h-28 bg-gray-300 flex items-center justify-center">
-                            <p className="text-xs text-center text-gray-500">Imagem não encontrada</p>
+                          <div className="w-full h-28 bg-black flex items-center justify-center">
+                            <p className="text-xs text-center text-white">Imagem não encontrada</p>
                           </div>
                         )}
                         <div className="p-2 text-center text-white bg-blue-600">
@@ -244,7 +272,8 @@ export default function EditarAgendamento() {
             {etapa === 2 && (
               <>
                 <h2 className="text-white text-xl font-bold mb-4">Professores Disponíveis</h2>
-                <div className="w-[70%] sm:w-[80%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-10 xl:gap-x-16 gap-y-3">
+                {loadingProfessores && <p className="text-white mb-4">Carregando...</p>}
+                <div className="w-[98%] sm:w-[70%] md:w-[66%] lg:w-[60%] grid grid-cols-2 sm:grid-cols-3 md:gap-x-0 lg:gap-x-10 xl:gap-x-16 gap-y-3">
                   {professores.map((prof) => {
                     const imagem = imagens[prof.nome];
 
@@ -290,7 +319,10 @@ export default function EditarAgendamento() {
               <div className="flex flex-col gap-8">
                 {/* Datas disponíveis */}
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-4">DATAS DISPONÍVEIS</h2>
+                  <h2 className="text-2xl font-bold text-white mb-4">Datas Disponíveis</h2>
+                  {loadingHorarios && !selecionado.data && (
+                    <p className="text-white mb-4">Carregando...</p>
+                  )}
                   <div className="flex flex-wrap gap-x-0">
                     {Object.keys(horarios).map((data) => {
                       const diaSemana = new Date(data + "T00:00:00").toLocaleDateString("pt-BR", {
@@ -444,10 +476,15 @@ export default function EditarAgendamento() {
               <div className="mt-6">
                 <button
                   onClick={handleAtualizar}
-                  disabled={etapa !== 3 || !selecionado.horario}
-                  className="w-full bg-yellow-400 text-black font-semibold px-4 py-2 rounded disabled:opacity-50 cursor-pointer"
+                  disabled={etapa !== 3 || !selecionado.horario || loadingAgendamento}
+                  className="w-full bg-yellow-400 text-black px-4 py-2 
+  rounded disabled:opacity-50 cursor-pointer hover:scale-105 transition-all flex items-center justify-center gap-2"
                 >
-                  Atualizar Agendamento
+                  {loadingAgendamento ? (
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    "Atualizar Agendamento"
+                  )}
                 </button>
               </div>
             </div>

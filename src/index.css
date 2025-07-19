@@ -154,3 +154,12 @@ body {
   }
 
 }
+
+.home-header-wrapper header {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+
+
