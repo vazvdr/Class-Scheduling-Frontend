@@ -38,7 +38,7 @@ export const Cover = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="relative bg-black group/cover inline-block px-2 py-2 transition duration-200 rounded-sm"    >
+      className="relative bg-black group/cover inline-block px-2 py-2 transition duration-200 rounded-sm">
       <AnimatePresence>
         {hovered && (
           <motion.div
@@ -136,11 +136,6 @@ export const Cover = ({
       >
         {children}
       </motion.span>
-
-      <CircleIcon className="absolute -right-[2px] -top-[2px]" />
-      <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
-      <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
-      <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
     </div>
   );
 };
