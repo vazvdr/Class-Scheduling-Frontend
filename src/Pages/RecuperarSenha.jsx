@@ -43,19 +43,8 @@ export default function RecuperarSenha() {
   };
 
   return (
-    <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
-
-      {/* CanvasLines para telas menores que md */}
-      <div className="block md:hidden fixed inset-0 z-[-1]">
-        <CanvasLines />
-      </div>
-
-      {/* Imagem para telas md ou maiores */}
-      <img
-        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
-        style={{ backgroundImage: "url('/Banner.jpg')" }}
-      />
-
+    <div className="bg-black/70 relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
+      <CanvasLines />
       <button
         onClick={() => navigate("/entrar")}
         className="absolute top-2 left-2 z-20 flex items-center gap-1 

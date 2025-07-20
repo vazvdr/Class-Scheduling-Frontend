@@ -101,21 +101,11 @@ export default function EditarUsuario() {
 
   return (
     <>
-      <div className="relative w-screen min-h-screen overflow-hidden home-header-wrapper">
-        <div className="block md:hidden fixed inset-0 z-[-1]">
-          <CanvasLines />
-        </div>
-
-        <div
-          className="hidden md:block fixed inset-0 bg-cover bg-center z-[-1]"
-          style={{ backgroundImage: "url('/Banner.jpg')" }}
-        />
-
+      <div className="bg-black/70 relative w-screen min-h-screen overflow-hidden home-header-wrapper">
+        <CanvasLines />
         <Header />
-
         <div className="relative z-20 px-4 pt-18 pb-10 flex flex-col items-center gap-10">
-
-          <div className="text-center">
+          <div className="text-center ">
             <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-300">
               Editar Perfil
             </h1>

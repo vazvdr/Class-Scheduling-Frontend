@@ -66,19 +66,8 @@ export default function RedefinirSenha() {
   };
 
   return (
-    <div className="relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
-
-      {/* CanvasLines para telas menores que md */}
-      <div className="block md:hidden fixed inset-0 z-[-1]">
+    <div className="bg-black/70 relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
         <CanvasLines />
-      </div>
-
-      {/* Imagem de fundo para telas md+ */}
-      <img
-        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
-        style={{ backgroundImage: "url('/Banner.jpg')" }}
-      />
-
       <div className="mt-12 z-10">
         <img src={Logo} alt="Logo" className="h-32" />
       </div>

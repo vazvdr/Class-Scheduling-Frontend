@@ -45,7 +45,7 @@ export default function Entrar() {
       if (isLogin) {
         setLoginLoading(true);
         await login({ email: data.email, senha: data.senha });
-  
+
         setTimeout(() => {
           setAlerta((prev) => ({ ...prev, visivel: false }));
           navigate("/");
@@ -74,40 +74,29 @@ export default function Entrar() {
         error.response?.data?.error ||
         error.message ||
         "Erro desconhecido.";
-  
+
       setAlerta({
         visivel: true,
         tipo: "destructive",
         titulo: "Erro ao autenticar",
         descricao: mensagemErro,
       });
-  
+
       setLoginLoading(false); // ← ⚠️ Correção essencial aqui
-  
+
       setTimeout(() => {
         setAlerta((prev) => ({ ...prev, visivel: false }));
       }, 3000);
     }
-  };  
+  };
 
   const irParaRecuperarSenha = () => {
     navigate('/recuperar-senha');
   };
 
   return (
-    <div className="relative h-screen w-screen flex items-center flex-col px-4 overflow-hidden">
-
-      {/* Fundo animado só em telas < md */}
-      <div className="block md:hidden">
-        <CanvasLines />
-      </div>
-
-      {/* Imagem de fundo só em telas md ou maiores */}
-      <div
-        className="hidden md:block fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1]"
-        style={{ backgroundImage: "url('/Banner.jpg')" }}
-      />
-
+    <div className="bg-black/70 relative h-screen w-screen flex items-center flex-col px-4 overflow-hidden">
+      <CanvasLines />
       <button
         onClick={() => navigate("/")}
         className="absolute top-2 left-2 z-20 flex items-center gap-1 
