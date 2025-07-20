@@ -80,11 +80,18 @@ const CanvasLines = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full z-[-1] pointer-events-none"
-      style={{ background: "#0a0a0a" }}
-    />
+    <div className="fixed top-0 left-0 w-full h-full bg-black z-[-2]" >
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 w-full h-full z-[-1] pointer-events-none"
+        style={{
+          background: "#0a0a0a",
+          width: "100vw",
+          height: "100vh"
+        }}
+      />
+    </div>
+
   );
 };
 
