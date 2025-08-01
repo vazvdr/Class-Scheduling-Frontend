@@ -36,7 +36,7 @@ export default function Agendamentos() {
   
     dataAtual.setHours(0, 0, 0, 0);
   
-    while (diasUteis.length < 7) {
+    while (diasUteis.length < 6) {
       const diaSemana = dataAtual.getDay();
       if (diaSemana !== 0 && diaSemana !== 6) {
         const dataFormatada = dataAtual.toISOString().slice(0, 10);
