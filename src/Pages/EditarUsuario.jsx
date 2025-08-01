@@ -25,8 +25,8 @@ import {
 } from "../Components/ui/alert-dialog";
 import { Alert, AlertDescription, AlertTitle } from "../Components/ui/alert";
 
-export default function EditarUsuario() {
-  const navigate = useNavigate();
+export default function EditarUsuario({navigateProp}) {
+  const navigate = navigateProp || useNavigate();
   const { editar, deletar } = useUsuario();
   const [loadingAtualizar, setLoadingAtualizar] = useState(false);
 

@@ -55,7 +55,6 @@ export default function RecuperarSenha() {
         <span className="text-sm font-medium">Voltar</span>
       </button>
 
-      {/* resto do seu código sem alteração */}
       <div className="mt-2 z-10">
         <img src={Logo} alt="Logo" className="h-40" />
       </div>

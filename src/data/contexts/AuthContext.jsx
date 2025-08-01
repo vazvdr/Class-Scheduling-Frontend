@@ -12,11 +12,10 @@ export function AuthProvider({ children }) {
     if (tokenSalvo) {
       setToken(tokenSalvo);
   
-      // Aqui você pode recuperar o usuário da API com esse token, se quiser.
       setUsuario({ token: tokenSalvo });
     }
   
-    setCarregando(false); // Isso deve ser chamado **depois** de setar tudo
+    setCarregando(false);
   }, []);  
 
   const login = (token, usuarioData) => {

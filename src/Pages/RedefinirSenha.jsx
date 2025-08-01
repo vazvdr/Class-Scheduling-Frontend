@@ -46,7 +46,8 @@ export default function RedefinirSenha() {
     }
     setLoading(true);
     try {
-      await redefinirSenha({ token, novaSenha: data.novaSenha });
+      const redefinir = window?.__mockRedefinirSenha__ || redefinirSenha;
+      await redefinir({ token, novaSenha: data.novaSenha });
       setAlerta({
         visivel: true,
         tipo: "default",
@@ -67,7 +68,7 @@ export default function RedefinirSenha() {
 
   return (
     <div className="bg-black/70 relative h-screen w-screen flex flex-col items-center px-4 overflow-hidden">
-        <CanvasLines />
+      <CanvasLines />
       <div className="mt-12 z-10">
         <img src={Logo} alt="Logo" className="h-32" />
       </div>
@@ -136,8 +137,8 @@ export default function RedefinirSenha() {
               type="submit"
               disabled={loading || !token}
               className={`w-full font-semibold py-2 rounded transition border border-white cursor-pointer ${loading || !token
-                  ? "bg-gray-400 text-white cursor-not-allowed"
-                  : "bg-transparent text-white hover:bg-white hover:text-black"
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-transparent text-white hover:bg-white hover:text-black"
                 }`}
             >
               {loading ? "Redefinindo..." : "Redefinir Senha"}
