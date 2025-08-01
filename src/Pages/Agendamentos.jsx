@@ -121,7 +121,7 @@ export default function Agendamentos() {
                   <div
                     key={data}
                     onClick={() => setDataSelecionada(data)}
-                    className={`flex flex-col items-center px-4 sm:px-6 md:px-8 lg:px-10 py-2 rounded-lg cursor-pointer
+                    className={`flex flex-col items-center px-2 sm:px-6 md:px-8 lg:px-10 py-2 rounded-lg cursor-pointer
                     ${dataSelecionada === data ? 'bg-blue-600 border border-white text-black font-bold' : 'bg-neutral-900 border border-white text-white'}
                     hover:bg-blue-800 transition-all`}
                   >
