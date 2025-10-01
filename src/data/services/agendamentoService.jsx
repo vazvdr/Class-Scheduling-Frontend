@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'https://class-scheduling-backend.onrender.com';
+const API = 'https://class-scheduling-backend-production.up.railway.app';
 
 function extrairIdDoToken(token) {
   if (!token) return null;
