@@ -119,11 +119,10 @@ export default function Agendamento() {
     };
   
     try {
-      await criarAgendamento(payload, token);
       setAlerta({
         tipo: "success",
         titulo: "Agendamento realizado com sucesso ✅",
-        descricao: "Verifique a confirmação no seu email cadastrado.",
+        descricao: "Verifique seus agendamentos no menu superior!",
         visivel: true,
       });
   
@@ -131,7 +130,9 @@ export default function Agendamento() {
         setAlerta(prev => ({ ...prev, visivel: false }));
         navigate('/');
       }, 4000);
-  
+      
+      await criarAgendamento(payload, token);
+
     } catch (error) {
       const mensagemErro = error.response?.data?.message ||
         error.response?.data?.error ||
