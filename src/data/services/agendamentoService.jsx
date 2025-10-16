@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'https://Class-scheduling-backend-env.eba-erpy66ix.sa-east-1.elasticbeanstalk.com';
+const API = 'https://class-scheduling-backend.onrender.com';
 
 function extrairIdDoToken(token) {
   if (!token) return null;

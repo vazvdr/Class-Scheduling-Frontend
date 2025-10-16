@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'https://Class-scheduling-backend-env.eba-erpy66ix.sa-east-1.elasticbeanstalk.com/usuarios';
+const API = 'https://class-scheduling-backend.onrender.com/usuarios';
 
 export const loginUsuario = async (payload) => {
   const res = await axios.post(`${API}/login`, payload);
