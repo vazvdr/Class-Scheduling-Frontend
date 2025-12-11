@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'https://class-scheduling-backend.onrender.com/usuarios';
+const API = 'https://class-scheduling-backend.up.railway.app/usuarios';
 
 export const loginUsuario = async (payload) => {
   const res = await axios.post(`${API}/login`, payload);
