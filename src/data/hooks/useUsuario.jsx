@@ -16,9 +16,9 @@ export function useUsuario() {
     try {
       const data = await loginUsuario({ email, senha });
       localStorage.setItem('token', data.token);
-  
+
       // Notifica o contexto que o usuário logou
-      loginContext(data.token, data.usuario); // <- muito importante!
+      loginContext(data.token, data.usuario);
     } catch (err) {
       throw err;
     }
@@ -41,7 +41,7 @@ export function useUsuario() {
       await editarUsuario({ nome, email, senha, telefone });
       if (onSuccess) onSuccess();
     } catch (err) {
-      throw err; 
+      throw err;
     }
   };
 
@@ -50,7 +50,7 @@ export function useUsuario() {
       await deletarUsuario();
       localStorage.removeItem("token");
     } catch (err) {
-      throw err; 
+      throw err;
     }
   };
 

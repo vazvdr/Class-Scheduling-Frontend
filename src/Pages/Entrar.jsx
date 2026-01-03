@@ -82,7 +82,7 @@ export default function Entrar() {
         descricao: mensagemErro,
       });
 
-      setLoginLoading(false); // ← ⚠️ Correção essencial aqui
+      setLoginLoading(false);
 
       setTimeout(() => {
         setAlerta((prev) => ({ ...prev, visivel: false }));

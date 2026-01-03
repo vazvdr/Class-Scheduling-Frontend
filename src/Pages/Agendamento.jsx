@@ -110,14 +110,14 @@ export default function Agendamento() {
 
   const handleAgendar = async () => {
     setLoadingAgendamento(true);
-  
+
     const payload = {
       assuntoId: selecionado.assunto?.id,
       professorId: selecionado.professor?.id,
       data: selecionado.data,
       horario: selecionado.horario,
     };
-  
+
     try {
       setAlerta({
         tipo: "success",
@@ -125,12 +125,12 @@ export default function Agendamento() {
         descricao: "Verifique seus agendamentos no menu superior!",
         visivel: true,
       });
-  
+
       setTimeout(() => {
         setAlerta(prev => ({ ...prev, visivel: false }));
         navigate('/');
       }, 4000);
-      
+
       await criarAgendamento(payload, token);
 
     } catch (error) {
@@ -138,14 +138,14 @@ export default function Agendamento() {
         error.response?.data?.error ||
         error.response?.data ||
         "Erro desconhecido";
-  
+
       let alertaErro = {
         tipo: "destructive",
         titulo: "Erro ao agendar",
         descricao: mensagemErro,
         visivel: true,
       };
-  
+
       if (mensagemErro.includes("conflito com este horário")) {
         alertaErro = {
           tipo: "destructive",
@@ -154,17 +154,17 @@ export default function Agendamento() {
           visivel: true,
         };
       }
-  
+
       setAlerta(alertaErro);
-  
+
       setTimeout(() => {
         setAlerta(prev => ({ ...prev, visivel: false }));
       }, 4000);
-  
+
     } finally {
       setLoadingAgendamento(false);
     }
-  };  
+  };
 
   return (
     <>
@@ -249,7 +249,7 @@ export default function Agendamento() {
                             <p className="text-xs text-center text-white">Imagem não encontrada</p>
                           </div>
                         )}
-                        <div className="p-2 text-center text-white bg-blue-600">
+                        <div className="p-2 text-center text-white bg-black/10">
                           <p className="text-sm font-medium h-8">{assunto.nome}</p>
                         </div>
                       </div>
@@ -289,13 +289,13 @@ export default function Agendamento() {
                             <img
                               src={imagem}
                               alt={prof.nome}
-                              className="h-full w-full object-contain"
+                              className="h-full w-full object-cover"
                             />
                           ) : (
                             <p className="text-xs text-center text-gray-500">Imagem não encontrada</p>
                           )}
                         </div>
-                        <div className="p-2 text-center bg-white">
+                        <div className="p-2 text-center bg-black/10 text-white">
                           <p className="text-sm font-medium">{prof.nome}</p>
                         </div>
                       </div>
